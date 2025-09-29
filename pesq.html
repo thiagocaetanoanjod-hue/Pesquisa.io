@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Emergência</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    header {
+      background: #264747;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 60px);
+      padding: 20px;
+      text-align: center;
+    }
+
+    section {
+      background: white;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .hidden { display: none; }
+
+    input {
+      width: 90%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      padding: 12px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      width: 95%;
+    }
+
+    .btn-primary {
+      background: #264747;
+      color: white;
+    }
+
+    .btn-primary:hover { background: #366666; }
+    .btn-secondary { background: #e6e6e6; }
+    .btn-secondary:hover { background: #ccc; }
+
+    /* Menu lateral */
+    .menu {
+      position: fixed;
+      left: -220px;
+      top: 0;
+      width: 200px;
+      height: 100%;
+      background: transparent;
+      color: white;
+      padding: 20px;
+      transition: left 0.3s ease, background 0.3s ease;
+      z-index: 999;
+    }
+
+    .menu.show {
+      left: 0;
+      background: rgba(0,0,0,0.95);
+    }
+
+    .menu a {
+      display: block;
+      color: white;
+      margin: 15px 0;
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+
+    .menu a:hover { color: #66cdaa; }
+
+    #menuBtn {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: #2f4f4f;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1000;
+      display: none;
+    }
+
+    .map {
+      width: 100%;
+      height: 250px;
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      margin: 15px 0;
+      font-weight: bold;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+    }
+    ul li { margin: 8px 0; }
+  </style>
+</head>
+<body>
+
+<button id="menuBtn" onclick="toggleMenu()">☰</button>
+
+<header><h2>App Emergência</h2></header>
+
+<div id="menu" class="menu">
+  <a href="#" onclick="showPage('home')">🏠 Início</a>
+  <a href="#" onclick="showPage('chat')">💬 Chat</a>
+  <a href="#" onclick="showPage('about')">ℹ Quem somos?</a>
+  <a href="#" onclick="showPage('map')">📍 Localização</a>
+</div>
+
+<main>
+  <!-- LOGIN -->
+  <section id="login">
+    <h3>Seja bem-vindo</h3>
+    <input type="email" placeholder="Email"><br>
+    <input type="password" placeholder="Senha"><br>
+    <button class="btn-primary" onclick="loginUser()">Entrar</button>
+    <button class="btn-secondary" onclick="showPage('register')">Cadastrar</button>
+  </section>
+
+  <!-- CADASTRO -->
+  <section id="register" class="hidden">
+    <h3>Criar Conta</h3>
+    <input type="text" placeholder="Nome completo"><br>
+    <input type="email" placeholder="Email"><br>
+    <input type="password" placeholder="Senha"><br>
+    <button class="btn-primary" onclick="loginUser()">Cadastrar</button>
+  </section>
+
+  <!-- HOME -->
+  <section id="home" class="hidden">
+    <h3>Início</h3>
+    <button class="btn-primary" onclick="showPage('alerta')">⚠ Alerta de Enchente</button>
+    <button class="btn-primary" onclick="showPage('dicas')">🌊 Dicas de Enchente</button>
+    <button class="btn-primary" onclick="showPage('kit')">🔥 Kit de Emergência</button>
+    <button class="btn-primary" onclick="showPage('map')">📍 Rotas Seguras</button>
+  </section>
+
+  <!-- ALERTA DE ENCHENTE -->
+  <section id="alerta" class="hidden">
+    <h3>⚠ Alerta de Enchente</h3>
+    <p>Mantenha-se em local seguro e evite áreas alagadas.</p>
+    <p>Em caso de emergência, acione os bombeiros: <b>193</b>.</p>
+    <button class="btn-secondary" onclick="showPage('home')">⬅ Voltar</button>
+  </section>
+
+  <!-- DICAS DE ENCHENTE -->
+  <section id="dicas" class="hidden">
+    <h3>🌊 Dicas de Enchente</h3>
+    <ul>
+      <li>❌ Não atravesse ruas alagadas.</li>
+      <li>📦 Guarde documentos e objetos importantes em sacos plásticos.</li>
+      <li>🔌 Desligue aparelhos elétricos se a água começar a subir.</li>
+      <li>🏠 Vá para locais altos e seguros.</li>
+    </ul>
+    <button class="btn-secondary" onclick="showPage('home')">⬅ Voltar</button>
+  </section>
+
+  <!-- KIT DE EMERGÊNCIA -->
+  <section id="kit" class="hidden">
+    <h3>🔥 Kit de Emergência</h3>
+    <ul>
+      <li>💧 Água potável</li>
+      <li>🥫 Alimentos não perecíveis</li>
+      <li>🔦 Lanterna e pilhas</li>
+      <li>📻 Rádio a pilha</li>
+      <li>🩹 Kit de primeiros socorros</li>
+      <li>📱 Celular carregado</li>
+    </ul>
+    <button class="btn-secondary" onclick="showPage('home')">⬅ Voltar</button>
+  </section>
+
+  <!-- CHAT -->
+  <section id="chat" class="hidden">
+    <h3>Chat Emergencial</h3>
+    <div class="chat-box" id="chatBox">
+      <p><b>Bot:</b> Olá! Você precisa de ajuda?</p>
+    </div>
+    <input type="text" id="chatInput" placeholder="Digite sua mensagem...">
+    <button class="btn-primary" onclick="sendMessage()">Enviar</button>
+  </section>
+
+  <!-- QUEM SOMOS -->
+  <section id="about" class="hidden">
+    <h3>Quem somos?</h3>
+    <p>Somos um aplicativo focado em ajudar em situações de emergência como enchentes, fornecendo informações, dicas e rotas seguras para a população.</p>
+  </section>
+
+  <!-- MAPA -->
+  <section id="map" class="hidden">
+    <h3>Localização</h3>
+    <div class="map">[Mapa Simulado]</div>
+    <ul>
+      <li>🏠 Abrigos</li>
+      <li>🏥 Hospitais</li>
+      <li>🚒 Bombeiros</li>
+    </ul>
+  </section>
+</main>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("menu").classList.toggle("show");
+  }
+
+  function showPage(page) {
+    document.querySelectorAll("main section").forEach(sec => sec.classList.add("hidden"));
+    document.getElementById(page).classList.remove("hidden");
+
+    if (page !== "login" && page !== "register") {
+      document.getElementById("menuBtn").style.display = "block";
+    } else {
+      document.getElementById("menuBtn").style.display = "none";
+    }
+
+    document.getElementById("menu").classList.remove("show");
+  }
+
+  function loginUser() {
+    showPage("home");
+  }
+
+  function sendMessage() {
+    let input = document.getElementById("chatInput");
+    let msg = input.value.trim();
+    if (msg !== "") {
+      let box = document.getElementById("chatBox");
+      box.innerHTML += `<p><b>Você:</b> ${msg}</p>`;
+      input.value = "";
+      box.scrollTop = box.scrollHeight;
+      setTimeout(() => {
+        box.innerHTML += `<p><b>Bot:</b> Entendi sua mensagem.</p>`;
+        box.scrollTop = box.scrollHeight;
+      }, 1000);
+    }
+  }
+</script>
+
+</body>
+</html>
